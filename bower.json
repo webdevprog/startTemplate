@@ -3,10 +3,14 @@
   "description": "template for front-end",
   "main": "index.js",
   "authors": [
-    "Unknow"
+    "Vitaliy"
   ],
   "dependencies": {
     "css-hamburgers": "^1.1.3",
-    "fontawesome": "^5.13.0"
+    "fontawesome": "^5.13.0",
+    "swiper": "^6.0.1",
+    "jquery": "^3.5.1",
+    "fancybox": "^3.5.7",
+    "bootstrap4": "bootstrap#^4.5.0"
   }
 }

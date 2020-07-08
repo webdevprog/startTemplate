@@ -8,7 +8,7 @@ var syntax = 'scss', // Syntax: sass or scss;
 		pug      	  = require('gulp-pug'),
 		browserSync   = require('browser-sync'),
 		concat        = require('gulp-concat'),
-		uglify        = require('gulp-uglify'),
+		uglify        = require('gulp-uglify-es').default,
 		cleancss      = require('gulp-clean-css'),
 		rename        = require('gulp-rename'),
 		autoprefixer  = require('gulp-autoprefixer'),
@@ -45,13 +45,15 @@ gulp.task('styles', function() {
 // JS
 gulp.task('scripts', function() {
 	return gulp.src([
+		'app/libs/swiper/build/swiper-bundle.js',
 		'app/libs/jquery/dist/jquery.min.js',
+		'app/libs/fancybox/dist/jquery.fancybox.min.js',
 		'app/js/common.js', // Always at the end
 		])
 	.pipe(concat('scripts.min.js'))
-	// .pipe(uglify()) // Mifify js (opt.)
+	.pipe(uglify())
 	.pipe(gulp.dest('app/js'))
-	.pipe(browserSync.reload({ stream: true }))
+	.pipe(browserSync.stream())
 });
 
 // Images @x1 & @x2 + Compression | Required graphicsmagick (sudo apt update; sudo apt install graphicsmagick)
@@ -145,7 +147,7 @@ if (gulpVersion == 4) {
 };
 
 
-gulp.task('build', () => {
+gulp.task('build', function(done) {
 	
 	del.sync('dist');
 	
@@ -158,7 +160,7 @@ gulp.task('build', () => {
 		]).pipe(gulp.dest('dist/css'));
 
 	var buildCss = gulp.src([
-		'app/img**/*',
+		'app/img/**/*',
 	]).pipe(gulp.dest('dist/img'));
 
 	var buildJs = gulp.src([
@@ -168,5 +170,10 @@ gulp.task('build', () => {
 	var buildFonts = gulp.src([
 		'app/fonts/**/*',
 		]).pipe(gulp.dest('dist/fonts'));
-	
+
+	var buildFonts = gulp.src([
+		'app/video/**/*',
+		]).pipe(gulp.dest('dist/video'));
+
+		done();
 })
